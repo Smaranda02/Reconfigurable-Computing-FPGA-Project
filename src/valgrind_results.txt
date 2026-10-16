@@ -1,0 +1,51 @@
+g++ -O2 -o main loser_tree_timing.cpp
+smaranda@DESKTOP-7RRUPKA:~/Master/RC_Project/src$ valgrind --tool=cachegrind --cache-sim=yes ./main
+==17467== Cachegrind, a high-precision tracing profiler
+==17467== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==17467== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==17467== Command: ./main
+==17467== 
+--17467-- warning: L3 cache found, using its data for the LL simulation.
+
+--- Vary N (k=4 fixed) ---
+N           WinnerTree (us)   LoserTree (us)    us/elem (WT)    us/elem (LT)    
+--------------------------------------------------------------------------------
+100         393.69            600.40            3.9369          6.0040          
+500         229.97            123.32            0.4599          0.2466          
+1000        448.25            347.97            0.4483          0.3480          
+5000        1780.88           1798.49           0.3562          0.3597          
+10000       4138.93           3025.57           0.4139          0.3026          
+50000       17754.23          15431.09          0.3551          0.3086          
+100000      29185.24          32268.32          0.2919          0.3227          
+500000      155647.03         135890.27         0.3113          0.2718          
+==17467== brk segment overflow in thread #1: can't grow to 0x4a3f000
+==17467== (see section Limitations in user manual)
+==17467== NOTE: further instances of this message will not be shown
+1000000     328864.30         266433.36         0.3289          0.2664          
+
+--- Vary k (n=10000 fixed) ---
+k       WinnerTree (us)   LoserTree (us)    
+--------------------------------------------
+2       2763.06           1743.80           
+4       3775.08           2922.10           
+8       4322.98           3809.22           
+16      5869.28           4950.63           
+32      7298.23           6839.42           
+64      10050.80          9291.36           
+==17467== 
+==17467== I refs:        2,128,626,278
+==17467== I1  misses:            4,389
+==17467== LLi misses:            2,564
+==17467== I1  miss rate:          0.00%
+==17467== LLi miss rate:          0.00%
+==17467== 
+==17467== D refs:          706,302,426  (548,696,662 rd   + 157,605,764 wr)
+==17467== D1  misses:        4,574,145  (  2,823,156 rd   +   1,750,989 wr)
+==17467== LLd misses:          488,781  (    125,069 rd   +     363,712 wr)
+==17467== D1  miss rate:           0.6% (        0.5%     +         1.1%  )
+==17467== LLd miss rate:           0.1% (        0.0%     +         0.2%  )
+==17467== 
+==17467== LL refs:           4,578,534  (  2,827,545 rd   +   1,750,989 wr)
+==17467== LL misses:           491,345  (    127,633 rd   +     363,712 wr)
+==17467== LL miss rate:            0.0% (        0.0%     +         0.2%  )
+smaranda@DESKTOP-7RRUPKA:~/Master/RC_Project/src$ 
